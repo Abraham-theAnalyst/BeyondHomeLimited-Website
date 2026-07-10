@@ -3,7 +3,8 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import Image from "next/image";
 import { useReducedMotion } from "framer-motion";
-import { HeroVideo, connectionConstrained } from "@/components/ui/hero-video";
+import { connectionConstrained } from "@/components/ui/hero-video";
+import { MobileHeroSequence } from "@/components/home/mobile-hero-sequence";
 import { scrollToElement } from "@/components/providers/smooth-scroll";
 import { cn } from "@/lib/utils";
 
@@ -141,7 +142,7 @@ export function HeroShell({ children }: { children: ReactNode }) {
             sizes="100vw"
             className="hidden object-cover md:block"
           />
-          {!reduce && !isDesktop && <HeroVideo base="night-roundabout" />}
+          {!reduce && !isDesktop && <MobileHeroSequence />}
         </div>
 
         {/* Desktop: the four-chapter reel, poster-first, videos enhance in */}

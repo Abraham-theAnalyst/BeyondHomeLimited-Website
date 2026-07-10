@@ -87,6 +87,36 @@ If Beyond Home holds these or any other memberships or certifications,
 send the details and we will add them to the About page. They are left off
 until confirmed.
 
+**12. Details for the "Selected Work" gallery.**
+The Work page now ends with a gallery of fifteen single pieces
+(`lib/gallery.ts`). Every caption states only what is visible in the
+photograph — we never guess a client's name. For each item below, confirm
+the brand, location or project details and we will name them properly:
+
+- "#ActOriginal" backlit unipole — whose campaign, and which city?
+- Roadside unipole at dusk — brand and location
+- Parimatch banner finishing — where was this produced?
+- Paramount Twin Towers site hoarding — location, and was this yours?
+- Highway interchange drone survey — which interchange?
+- Clock tower banners — location and whether this was a Beyond Home job
+- Airport concourse bank campaign — brand, airport, attribution
+- Normans walkway takeover — location and attribution
+- Rolex wall prints (two photos) — location and attribution
+- Harbour wall graphic — location and attribution
+- Show lounge walkthrough video — what project was this?
+
+**Three photos in the gallery are too small and need originals** (they
+currently display at reduced size so they never look blurry):
+
+- Sunlight lightbox billboard (330px wide)
+- Rite Foods branded truck (294px wide)
+- Sales office teardrop flag (259px wide)
+
+Two photos from the profile were left off the site entirely because they
+are too small to publish even as insets: a second Golden Penny wrap angle
+(269px) and a Halogen-branded cap (265px). Send originals if you want
+either shown. Everything else that could hold up on screen is now live.
+
 ---
 
 ## How to change the words on the site

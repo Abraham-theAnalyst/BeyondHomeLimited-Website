@@ -4,6 +4,8 @@ import { Footer } from "@/components/chrome/footer";
 import { WhatsAppFloat } from "@/components/chrome/whatsapp-float";
 import { MobileBar } from "@/components/chrome/mobile-bar";
 import { WorkGallery } from "@/components/work/work-gallery";
+import { SelectedWork } from "@/components/work/selected-work";
+import { GALLERY } from "@/lib/gallery";
 import { PUBLISHED } from "@/lib/work";
 
 export const metadata: Metadata = {
@@ -39,6 +41,28 @@ export default function WorkPage() {
           <div className="mt-12">
             <WorkGallery projects={PUBLISHED} />
           </div>
+        </section>
+
+        {/* ——— selected work: single pieces with factual captions ——— */}
+        <section className="rule container-site py-section-sm">
+          <div className="mb-4 flex items-baseline gap-6">
+            <span
+              aria-hidden
+              data-n="+"
+              className="type-display text-numeral text-ash select-none before:content-[attr(data-n)]"
+            />
+            <div>
+              <p className="type-eyebrow mb-2">Selected work</p>
+              <h2 className="type-display text-display-md text-paper">
+                Single pieces, plainly captioned
+              </h2>
+              <p className="mt-3 max-w-[60ch] text-body text-smoke">
+                {GALLERY.length} placements and productions beyond the case
+                studies. Each caption states only what the photograph shows.
+              </p>
+            </div>
+          </div>
+          <SelectedWork />
         </section>
       </main>
       <Footer />

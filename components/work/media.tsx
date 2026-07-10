@@ -28,6 +28,8 @@ export function VideoBlock({
   const [posterOnly] = useState(
     () => typeof navigator !== "undefined" && connectionConstrained()
   );
+  // nothing downloads until the block first approaches the viewport
+  const [armed, setArmed] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -36,8 +38,10 @@ export function VideoBlock({
     if (!v || reduce || posterOnly) return;
     const io = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !document.hidden) v.play().catch(() => {});
-        else v.pause();
+        if (entries[0].isIntersecting && !document.hidden) {
+          setArmed(true);
+          v.play().catch(() => {});
+        } else v.pause();
       },
       { threshold: 0.3 }
     );
@@ -52,6 +56,13 @@ export function VideoBlock({
       document.removeEventListener("visibilitychange", onVis);
     };
   }, [reduce, posterOnly]);
+
+  // sources attach after arming, so kick the fetch (WebKit ignores
+  // late-attached sources otherwise)
+  useEffect(() => {
+    const v = ref.current;
+    if (armed && v && v.networkState === HTMLMediaElement.NETWORK_EMPTY) v.load();
+  }, [armed]);
 
   if (reduce || posterOnly || failed) {
     return (
@@ -86,8 +97,12 @@ export function VideoBlock({
         playsInline
         {...{ "webkit-playsinline": "true" }}
         preload="none"
-        poster={`/hero/${base}-poster.jpg`}
         onPlaying={() => setPlaying(true)}
+        onCanPlay={(e) => {
+          const r = e.currentTarget.getBoundingClientRect();
+          const onScreen = r.bottom > 0 && r.top < window.innerHeight;
+          if (!document.hidden && onScreen) e.currentTarget.play().catch(() => {});
+        }}
         onError={() => setFailed(true)}
         aria-label={alt}
         className={cn(
@@ -95,8 +110,12 @@ export function VideoBlock({
           playing ? "opacity-100" : "opacity-0"
         )}
       >
-        <source src={`/hero/${base}.mp4`} type="video/mp4" />
-        <source src={`/hero/${base}.webm`} type="video/webm" />
+        {armed && (
+          <>
+            <source src={`/hero/${base}.mp4`} type="video/mp4" />
+            <source src={`/hero/${base}.webm`} type="video/webm" />
+          </>
+        )}
       </video>
     </div>
   );
@@ -120,10 +139,12 @@ export function WorkMediaBlock({
   const ratio = `${media.w} / ${media.h}`;
 
   if (media.type === "video") {
+    // portrait clips stay contained at natural width; landscape fills
+    const portrait = media.h > media.w;
     return (
       <div
-        className={cn("relative overflow-hidden", className)}
-        style={{ aspectRatio: "832 / 464" }}
+        className={cn("relative overflow-hidden", portrait && "mx-auto", className)}
+        style={{ aspectRatio: ratio, maxWidth: portrait ? media.w : undefined }}
       >
         <VideoBlock base={media.base} alt={media.alt} className="absolute inset-0" />
       </div>

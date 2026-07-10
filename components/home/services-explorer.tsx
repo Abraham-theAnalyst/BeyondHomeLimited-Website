@@ -148,30 +148,33 @@ export function ServicesExplorer({ detailed = false }: { detailed?: boolean }) {
               />
             </Link>
 
-            {/* Touch/mobile row: accordion */}
-            <div className="lg:hidden">
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
-                aria-expanded={open === i}
-                className="grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-6 text-left"
-              >
-                <span
-                  className={cn(
-                    "font-mono text-caption tracking-[0.18em]",
-                    open === i ? "text-gold" : "text-smoke"
-                  )}
-                >
+            {/* Touch/mobile row: media shows by default, the toggle
+                reveals deliverables and the link */}
+            <div className="py-6 lg:hidden">
+              <div className="grid grid-cols-[2.5rem_1fr] items-baseline gap-4">
+                <span className="font-mono text-caption tracking-[0.18em] text-gold">
                   {s.index}
                 </span>
                 <span className="type-display text-display-sm text-paper">{s.title}</span>
+              </div>
+              <div className="relative mt-4 aspect-[16/10] overflow-hidden">
+                <AccordionMedia media={s.media} />
+              </div>
+              <p className="mt-4 text-body text-mist">{s.line}</p>
+              <button
+                onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i}
+                className="mt-3 flex min-h-11 items-center gap-2 font-mono text-caption uppercase tracking-[0.18em] text-smoke"
+              >
                 <Plus
-                  size={18}
+                  size={14}
                   aria-hidden
                   className={cn(
-                    "translate-y-1 text-smoke transition-transform duration-base ease-expo",
-                    open === i && "rotate-45 text-gold"
+                    "text-gold transition-transform duration-base ease-expo",
+                    open === i && "rotate-45"
                   )}
                 />
+                {open === i ? "Less" : "What we deliver"}
               </button>
               <AnimatePresence initial={false}>
                 {open === i && (
@@ -182,16 +185,17 @@ export function ServicesExplorer({ detailed = false }: { detailed?: boolean }) {
                     transition={{ duration: 0.5, ease: EASE }}
                     className="overflow-hidden"
                   >
-                    <div className="pb-8">
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <AccordionMedia media={s.media} />
-                      </div>
-                      <p className="mt-4 text-body text-mist">{s.line}</p>
-                      <div className="mt-4">
-                        <UnderlineLink href={`/services/${s.slug}`}>
-                          View service
-                        </UnderlineLink>
-                      </div>
+                    <ul className="mt-3 space-y-1.5">
+                      {s.deliverables.map((d) => (
+                        <li key={d} className="text-sm text-smoke">
+                          {d}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mb-2 mt-4">
+                      <UnderlineLink href={`/services/${s.slug}`}>
+                        View service
+                      </UnderlineLink>
                     </div>
                   </m.div>
                 )}

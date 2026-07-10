@@ -138,7 +138,7 @@ export default async function ServicePage({
 
         {/* 4 ——— related work */}
         <Section index="03" eyebrow="Related work" title="Where this service shows" tight>
-          <RelatedWork slugs={s.relatedWork} />
+          <RelatedWork slugs={s.relatedWork} serviceSlug={s.slug} />
         </Section>
 
         {/* 5 ——— enquiry moment */}

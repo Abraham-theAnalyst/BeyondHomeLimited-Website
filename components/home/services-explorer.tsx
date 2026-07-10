@@ -7,6 +7,7 @@ import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Plus } from "lucide-react";
 import { UnderlineLink } from "@/components/ui/underline-link";
 import { DesignedVisual } from "@/components/services/designed-visual";
+import { VideoBlock } from "@/components/work/media";
 import { SERVICES, type ServiceMedia } from "@/lib/services";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +27,11 @@ function PanelMedia({
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (active) v.play().catch(() => {});
+    if (active)
+      v.play().catch((err) => {
+        if (process.env.NODE_ENV !== "production")
+          console.warn("services panel video play() rejected:", err);
+      });
     else v.pause();
   }, [active]);
 
@@ -234,16 +239,18 @@ export function ServicesExplorer({ detailed = false }: { detailed?: boolean }) {
   );
 }
 
-/** Mobile accordion media: static graded image (poster frame for videos),
- *  or the designed visual, which is weightless SVG. */
+/** Mobile row media: the designed visual (weightless SVG), a playing clip
+ *  (IO-armed, connection-gated, poster fallback), or the graded photo. */
 function AccordionMedia({ media }: { media: ServiceMedia }) {
   if (media.type === "designed") {
     return <DesignedVisual variant={media.variant} />;
   }
-  const src = media.type === "image" ? media.src : `/hero/${media.base}-poster.jpg`;
+  if (media.type === "video") {
+    return <VideoBlock base={media.base} alt={media.alt} className="absolute inset-0" />;
+  }
   return (
     <Image
-      src={src}
+      src={media.src}
       alt={media.alt}
       fill
       sizes="100vw"

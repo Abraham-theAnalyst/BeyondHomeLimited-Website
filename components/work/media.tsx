@@ -36,11 +36,17 @@ export function VideoBlock({
   useEffect(() => {
     const v = ref.current;
     if (!v || reduce || posterOnly) return;
+    const tryPlay = () =>
+      v.play().catch((err) => {
+        if (process.env.NODE_ENV !== "production")
+          console.warn(`VideoBlock play() rejected (${v.currentSrc || "no source yet"}):`, err);
+      });
     const io = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !document.hidden) {
           setArmed(true);
-          v.play().catch(() => {});
+          // before sources attach, onCanPlay handles the first play
+          if (v.querySelector("source")) tryPlay();
         } else v.pause();
       },
       { threshold: 0.3 }
@@ -48,7 +54,7 @@ export function VideoBlock({
     io.observe(v);
     const onVis = () => {
       if (document.hidden) v.pause();
-      else v.play().catch(() => {});
+      else tryPlay();
     };
     document.addEventListener("visibilitychange", onVis);
     return () => {

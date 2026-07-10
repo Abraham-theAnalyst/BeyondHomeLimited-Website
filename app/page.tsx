@@ -8,7 +8,7 @@ import { MobileBar } from "@/components/chrome/mobile-bar";
 import { HomeHero } from "@/components/home/hero";
 import { Testimonials } from "@/components/home/testimonials";
 import { ServicesExplorer } from "@/components/home/services-explorer";
-import { CaseStrip } from "@/components/home/case-strip";
+import { FeaturedWork } from "@/components/home/featured-work";
 import { CoverageMap } from "@/components/home/coverage-map";
 import { ClientMarquee } from "@/components/home/client-marquee";
 import { Section } from "@/components/ui/section";
@@ -134,9 +134,9 @@ export default function HomePage() {
           </ol>
         </Section>
 
-        {/* 04 ——— featured work: interactive case strip */}
+        {/* 04 ——— featured work: one lead, four staggered */}
         <Section index="03" eyebrow="Featured work" title="Recent placements, at size">
-          <CaseStrip />
+          <FeaturedWork />
         </Section>
 
         {/* 05 ——— services: explorable index */}

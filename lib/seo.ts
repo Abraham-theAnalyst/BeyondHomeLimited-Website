@@ -1,8 +1,19 @@
 import { CONTACT, COMPANY } from "@/lib/site";
 
-/** Canonical origin — TODO-CLIENT: confirm final production domain. */
+/**
+ * Canonical origin. Resolution order:
+ * 1. NEXT_PUBLIC_SITE_URL (set this in Vercel; the final domain once live)
+ * 2. Vercel's own URLs, so previews and the .vercel.app deployment get
+ *    working absolute og:image/canonical/sitemap URLs automatically
+ * 3. the intended production domain (TODO-CLIENT: confirm)
+ */
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://beyondhome.com.ng";
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : "https://beyondhome.com.ng");
 
 /**
  * Organization schema: AdvertisingAgency (a LocalBusiness subtype).

@@ -33,7 +33,10 @@ See `.env.example` for full comments.
 1. Push this repository to GitHub and import it at vercel.com → **Add New →
    Project**. Framework auto-detects as Next.js; defaults are correct.
 2. In **Project → Settings → Environment Variables**, add
-   `FORMSUBMIT_TARGET` and `NEXT_PUBLIC_SITE_URL` (Production scope).
+   `FORMSUBMIT_TARGET`. `NEXT_PUBLIC_SITE_URL` can stay unset until the
+   real domain is connected — the site falls back to Vercel's deployment
+   URL so social previews and the sitemap work from day one. Set it to
+   `https://beyondhome.com.ng` when the domain goes live.
 3. Deploy. Verify the preview URL end to end before pointing the domain.
 4. Connect the domain: **Project → Settings → Domains → Add** →
    `beyondhome.com.ng` (and `www.beyondhome.com.ng`, redirected to the apex).

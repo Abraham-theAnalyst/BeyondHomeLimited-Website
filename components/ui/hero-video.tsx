@@ -123,6 +123,11 @@ export function HeroVideo({
       {...{ "webkit-playsinline": "true" }}
       preload="none"
       onPlaying={() => setPlaying(true)}
+      // WebKit ignores the autoplay attribute for sources attached after
+      // mount and will not retry a rejected early play(); kick it when ready
+      onCanPlay={(e) => {
+        if (!document.hidden) e.currentTarget.play().catch(() => {});
+      }}
       onError={() => setFailed(true)}
       onStalled={() => setPlaying(false)}
       aria-hidden
@@ -137,8 +142,8 @@ export function HeroVideo({
           so phones never touch the desktop file */}
       {armed && isDesktop !== null && (
         <>
-          <source src={`/hero/${src}.webm`} type="video/webm" />
           <source src={`/hero/${src}.mp4`} type="video/mp4" />
+          <source src={`/hero/${src}.webm`} type="video/webm" />
         </>
       )}
     </video>

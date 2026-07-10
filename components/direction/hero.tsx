@@ -127,8 +127,8 @@ export function Hero() {
                     : "inset-0 h-full w-full object-cover"
                 )}
               >
-                <source src={`/hero/${c.base}.webm`} type="video/webm" />
                 <source src={`/hero/${c.base}.mp4`} type="video/mp4" />
+                <source src={`/hero/${c.base}.webm`} type="video/webm" />
               </video>
               {/* Portrait chapter sits framed against ink, spec-sheet style */}
               {c.portrait && <div className="absolute inset-0 bg-ink/45" />}

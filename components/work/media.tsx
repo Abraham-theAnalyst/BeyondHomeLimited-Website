@@ -56,11 +56,13 @@ export function VideoBlock({
   if (reduce || posterOnly || failed) {
     return (
       <div className={cn("relative overflow-hidden", className)}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={`/hero/${base}-poster.jpg`}
           alt={alt}
-          className="h-full w-full object-cover"
+          fill
+          sizes="(max-width: 768px) 100vw, 900px"
+          quality={65}
+          className="object-cover"
         />
       </div>
     );
@@ -68,16 +70,19 @@ export function VideoBlock({
 
   return (
     <div className={cn("relative overflow-hidden", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={`/hero/${base}-poster.jpg`}
         alt={alt}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        sizes="(max-width: 768px) 100vw, 900px"
+        quality={65}
+        className="object-cover"
       />
       <video
         ref={ref}
         muted
         loop
+        autoPlay
         playsInline
         {...{ "webkit-playsinline": "true" }}
         preload="none"
@@ -90,8 +95,8 @@ export function VideoBlock({
           playing ? "opacity-100" : "opacity-0"
         )}
       >
-        <source src={`/hero/${base}.webm`} type="video/webm" />
         <source src={`/hero/${base}.mp4`} type="video/mp4" />
+        <source src={`/hero/${base}.webm`} type="video/webm" />
       </video>
     </div>
   );

@@ -107,7 +107,7 @@ function PlanVisual() {
 
 /** Social Media Marketing: a posting cadence — the calendar as rhythm. */
 function CadenceVisual() {
-  const days = ["M", "T", "W", "T", "F", "S", "S"];
+  const cols = 7;
   // fixed posting slots (row, col) — deliberate, not random
   const slots = new Set(["0-1", "0-4", "1-2", "1-5", "2-0", "2-3", "2-6", "3-1", "3-4"]);
   return (
@@ -119,23 +119,9 @@ function CadenceVisual() {
       className="absolute inset-0 h-full w-full"
       preserveAspectRatio="xMidYMid slice"
     >
-      {days.map((d, c) => (
-        <text
-          key={`d${c}`}
-          x={112 + c * 96}
-          y={64}
-          textAnchor="middle"
-          fill="rgba(138,138,133,0.9)"
-          fontSize="15"
-          fontFamily="var(--font-plex-mono), monospace"
-          letterSpacing="2"
-        >
-          {d}
-        </text>
-      ))}
       <line x1={64} y1={86} x2={736} y2={86} stroke="rgba(250,250,247,0.14)" strokeWidth="1" />
       {Array.from({ length: 4 }, (_, r) =>
-        days.map((_, c) => {
+        Array.from({ length: cols }, (_, c) => {
           const on = slots.has(`${r}-${c}`);
           return (
             <rect

@@ -58,8 +58,8 @@ function PanelMedia({
       aria-label={media.alt}
       className="absolute inset-0 h-full w-full object-cover"
     >
-      <source src={`/hero/${media.base}.webm`} type="video/webm" />
       <source src={`/hero/${media.base}.mp4`} type="video/mp4" />
+      <source src={`/hero/${media.base}.webm`} type="video/webm" />
     </video>
   ) : null;
 }
